@@ -1,16 +1,18 @@
 export default function CodePanel() {
   return (
-    <div className="hero-visual code-panel">
+    <div className="code-panel">
       <div className="code-panel-header">
-        <span>system.js</span>
-        <span>01</span>
+        <span>product.ts</span>
+        <span>03</span>
       </div>
 
-      <code>
-        <span>const</span> idea = build()
-        <br />
-        <span>await</span> idea.ship()
-      </code>
+      <pre>
+        <code>
+          <span className="code-kw">const</span> intent = design(){'\n'}
+          <span className="code-kw">const</span> system = build(intent){'\n'}
+          system.learn()
+        </code>
+      </pre>
     </div>
   )
 }
