@@ -1,14 +1,16 @@
 export default function SystemNode() {
   return (
-    <div className="hero-visual system-node">
-      <div className="node node-main">APP</div>
+    <div className="system-node">
+      <p className="system-node-label">Architecture</p>
 
-      <div className="node node-api">API</div>
-
-      <div className="node node-db">DB</div>
-
-      <span className="connection connection-one" />
-      <span className="connection connection-two" />
+      <div className="system-graph">
+        <span className="node">APP</span>
+        <span className="system-line" aria-hidden="true" />
+        <div className="system-branch">
+          <span className="node">API</span>
+          <span className="node">DB</span>
+        </div>
+      </div>
     </div>
   )
 }

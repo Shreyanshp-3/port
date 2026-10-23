@@ -1,24 +1,21 @@
+const steps = [
+  { index: '01', label: 'Retrieve' },
+  { index: '02', label: 'Reason' },
+  { index: '03', label: 'Act' },
+]
+
 export default function AgentFlow() {
   return (
-    <div className="hero-visual agent-flow">
-      <div>
-        <small>01</small>
-        <span>RETRIEVE</span>
-      </div>
-
-      <b>→</b>
-
-      <div>
-        <small>02</small>
-        <span>REASON</span>
-      </div>
-
-      <b>→</b>
-
-      <div>
-        <small>03</small>
-        <span>ACT</span>
-      </div>
+    <div className="agent-flow">
+      {steps.map((step, index) => (
+        <div key={step.label} className="agent-step">
+          {index > 0 ? <b aria-hidden="true">→</b> : null}
+          <div>
+            <small>{step.index}</small>
+            <span>{step.label}</span>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }

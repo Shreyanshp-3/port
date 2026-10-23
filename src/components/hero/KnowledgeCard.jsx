@@ -1,7 +1,7 @@
 export default function KnowledgeCard() {
   return (
-    <div className="hero-visual knowledge-card">
-      <small>KNOWLEDGE / 01</small>
+    <div className="knowledge-card">
+      <small>Corpus</small>
 
       <div className="knowledge-lines">
         <span />
@@ -14,6 +14,7 @@ export default function KnowledgeCard() {
         <i />
         <i />
         <i />
+        <em>3 chunks</em>
       </div>
     </div>
   )

@@ -1,8 +1,8 @@
 export default function TypeSpecimen() {
   return (
-    <div className="hero-visual type-specimen">
-      <span>Aa</span>
-      <small>TYPE / 01</small>
+    <div className="type-specimen">
+      <span className="type-specimen-glyph">Ag</span>
+      <small className="type-specimen-meta">Display · Regular</small>
     </div>
   )
 }
