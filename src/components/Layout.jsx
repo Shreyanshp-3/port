@@ -1,7 +1,9 @@
 import { useLayoutEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import SiteHeader from './SiteHeader.jsx'
+import IndexRail from './IndexRail.jsx'
 import SiteFooter from './SiteFooter.jsx'
+import GridLines from './GridLines.jsx'
+import ScrollProgress from './ScrollProgress.jsx'
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
@@ -15,27 +17,28 @@ function ScrollToTop() {
       }
     }
 
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [pathname, hash])
 
   return null
 }
 
 export default function Layout() {
-  const { pathname } = useLocation()
-  const isHome = pathname === '/'
-
   return (
-    <div className={`site${isHome ? ' site--home' : ''}`}>
+    <div className="site">
       <ScrollToTop />
+      <ScrollProgress />
+      <GridLines />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <SiteHeader />
-      <div id="main">
-        <Outlet />
+      <IndexRail />
+      <div className="site-main">
+        <div id="main">
+          <Outlet />
+        </div>
+        <SiteFooter />
       </div>
-      <SiteFooter />
     </div>
   )
 }

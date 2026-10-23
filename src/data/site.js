@@ -10,11 +10,12 @@ export const site = {
 }
 
 export const navItems = [
-  { to: '/design', label: 'Design' },
-  { to: '/development', label: 'Development' },
-  { to: '/ai', label: 'AI' },
-  { to: '/about', label: 'About' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', label: 'Index', index: '00', end: true },
+  { to: '/design', label: 'Design', index: '01' },
+  { to: '/development', label: 'Development', index: '02' },
+  { to: '/ai', label: 'AI', index: '03' },
+  { to: '/about', label: 'About', index: '04' },
+  { to: '/contact', label: 'Contact', index: '05' },
 ]
 
 export const socialLinks = [

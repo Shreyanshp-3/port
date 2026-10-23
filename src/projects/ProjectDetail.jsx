@@ -1,7 +1,8 @@
 import { Link, useParams } from 'react-router-dom'
 import PageContainer from '../components/PageContainer.jsx'
 import ProjectFallback from '../components/ProjectFallback.jsx'
-import { getAdjacentProjects, getProject } from '../data/projects.js'
+import Reveal from '../components/Reveal.jsx'
+import { getAdjacentProjects, getProject, getProjectsByCategory } from '../data/projects.js'
 
 const categoryLabel = {
   design: 'Design',
@@ -24,8 +25,8 @@ export default function ProjectDetail({ category }) {
             The slug is not in the {categoryLabel[category] ?? category} index.
           </p>
           <p>
-            <Link to={indexHref} className="text-link">
-              Back to {categoryLabel[category] ?? 'projects'}
+            <Link to={indexHref} className="text-link text-link--accent">
+              Back to {categoryLabel[category] ?? 'projects'} →
             </Link>
           </p>
         </PageContainer>
@@ -33,6 +34,8 @@ export default function ProjectDetail({ category }) {
     )
   }
 
+  const siblings = getProjectsByCategory(category)
+  const position = siblings.findIndex((entry) => entry.slug === slug)
   const { prev, next } = getAdjacentProjects(category, slug)
   const image = project.heroImage || project.thumbnail
 
@@ -45,19 +48,22 @@ export default function ProjectDetail({ category }) {
           {project.projectType}
         </p>
 
-        <header className="detail-header">
+        <Reveal as="header" className="detail-header">
+          <span className="detail-index-no">
+            N° {String(position + 1).padStart(2, '0')} / {String(siblings.length).padStart(2, '0')}
+          </span>
           <h1 className="page-title">{project.title}</h1>
           <p className="detail-practice">{project.practice}</p>
           <p className="page-lede">{project.description}</p>
-        </header>
+        </Reveal>
 
-        <div className="detail-media">
+        <Reveal className="detail-media" delay={0.06}>
           {image ? (
             <img src={image} alt="" />
           ) : (
             <ProjectFallback project={project} className="is-hero" />
           )}
-        </div>
+        </Reveal>
 
         {project.technologies.length > 0 ? (
           <section className="detail-section" aria-labelledby="detail-tech">
@@ -76,12 +82,12 @@ export default function ProjectDetail({ category }) {
         {project.repo ? (
           <p>
             <a
-              className="text-link"
+              className="text-link text-link--accent"
               href={project.repo}
               target="_blank"
               rel="noreferrer"
             >
-              View repository
+              View repository ↗
             </a>
           </p>
         ) : null}

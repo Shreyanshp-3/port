@@ -1,7 +1,8 @@
 import PageContainer from '../components/PageContainer.jsx'
 import PageHeader from '../components/PageHeader.jsx'
-import ProjectPreview from '../components/ProjectPreview.jsx'
-import { getProjectsByCategory } from '../data/projects.js'
+import Reveal from '../components/Reveal.jsx'
+import DesignExhibit from '../components/exhibits/DesignExhibit.jsx'
+import ProjectIndex from './ProjectIndex.jsx'
 
 const capabilities = [
   { label: 'UI / UX design', note: 'Screens that can be read at a glance.' },
@@ -13,66 +14,51 @@ const capabilities = [
 ]
 
 export default function Design() {
-  const projects = getProjectsByCategory('design')
-  const [lead, ...rest] = projects
-
   return (
     <main className="page page-design">
       <PageContainer>
         <PageHeader
-          kicker="01 — Design"
+          index="01"
+          kicker="Practice"
           title={
             <>
               Interfaces with
-              <br />
-              a point of view.
+              <br />a point of view.
             </>
           }
           lede="I design product surfaces so the hierarchy is obvious, the interaction is quiet, and the system underneath can actually be built."
         />
 
-        <section className="design-capabilities" aria-label="Design capabilities">
-          <div className="design-capabilities-intro">
-            <p className="page-kicker">Practice</p>
+        <section className="discipline-exhibit" aria-label="Design method">
+          <Reveal>
+            <DesignExhibit />
+          </Reveal>
+          <Reveal delay={0.08} className="discipline-notes">
             <p>
               Design here is not a layer of polish added at the end. It is how the product is
               structured: type, grid, flow, and the small interface details that keep a screen
               from becoming noise.
             </p>
-          </div>
-
-          <ol className="capability-list">
-            {capabilities.map((item, index) => (
-              <li key={item.label}>
-                <span>0{index + 1}</span>
-                <div>
-                  <strong>{item.label}</strong>
-                  <p>{item.note}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+            <ol className="capability-list">
+              {capabilities.map((item, index) => (
+                <li key={item.label}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div>
+                    <strong>{item.label}</strong>
+                    <p>{item.note}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </section>
 
         <section className="page-section" aria-labelledby="design-work">
-          <div className="section-heading">
-            <p className="page-kicker">Work</p>
+          <div className="section-heading-row">
             <h2 id="design-work">Studies and product interfaces.</h2>
+            <p>Work shown is either shipped or an explicit study.</p>
           </div>
-
-          {lead ? <ProjectPreview project={lead} variant="feature" /> : null}
-
-          {rest.length > 0 ? (
-            <div className="project-index project-index--study">
-              {rest.map((project) => (
-                <ProjectPreview
-                  key={project.slug}
-                  project={project}
-                  variant="study"
-                />
-              ))}
-            </div>
-          ) : null}
+          <ProjectIndex category="design" variant="row" />
         </section>
       </PageContainer>
     </main>
