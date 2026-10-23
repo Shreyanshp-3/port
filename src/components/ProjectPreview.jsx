@@ -5,8 +5,9 @@ function hrefFor(project) {
   return `/${project.category}/projects/${project.slug}`
 }
 
-export default function ProjectPreview({ project, variant = 'row' }) {
+export default function ProjectPreview({ project, variant = 'row', index }) {
   const href = hrefFor(project)
+  const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null
 
   if (variant === 'feature') {
     return (
@@ -46,6 +47,7 @@ export default function ProjectPreview({ project, variant = 'row' }) {
 
   return (
     <article className="project-row">
+      {number ? <span className="project-row-no">{number}</span> : null}
       <Link to={href} className="project-row-main">
         <span className="project-meta">{project.practice}</span>
         <h2>{project.title}</h2>

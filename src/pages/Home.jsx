@@ -1,186 +1,149 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import PageContainer from '../components/PageContainer.jsx'
-import ProjectPreview from '../components/ProjectPreview.jsx'
-import HeroStage from '../components/hero/HeroStage.jsx'
+import Reveal from '../components/Reveal.jsx'
+import DesignExhibit from '../components/exhibits/DesignExhibit.jsx'
+import DevelopmentExhibit from '../components/exhibits/DevelopmentExhibit.jsx'
+import AIExhibit from '../components/exhibits/AIExhibit.jsx'
 import { getFeaturedProjects } from '../data/projects.js'
 import { site } from '../data/site.js'
 
-const modes = ['design', 'build', 'ai']
-
-const modeContent = {
-  design: {
-    label: 'Design',
-    statement: (
-      <>
-        I design experiences
-        <br />
-        that feel clear and human.
-      </>
-    ),
-  },
-  build: {
-    label: 'Development',
-    statement: (
-      <>
-        I build systems
-        <br />
-        that turn ideas into products.
-      </>
-    ),
-  },
-  ai: {
-    label: 'AI',
-    statement: (
-      <>
-        I make products
-        <br />
-        intelligent.
-      </>
-    ),
-  },
-}
-
 const practices = [
   {
+    no: '01',
+    name: 'Design',
     to: '/design',
-    index: '01',
-    label: 'Design',
-    copy: 'Interfaces, product design, and the hierarchy that makes a surface readable.',
+    copy: 'Interfaces, product design, and the hierarchy that makes a surface readable before it is made clever.',
+    Exhibit: DesignExhibit,
   },
   {
+    no: '02',
+    name: 'Development',
     to: '/development',
-    index: '02',
-    label: 'Development',
-    copy: 'Full-stack systems that hold the idea once it has to work.',
+    copy: 'Full-stack systems — interface, API, and data — built to hold the idea once it has to run.',
+    Exhibit: DevelopmentExhibit,
   },
   {
+    no: '03',
+    name: 'AI',
     to: '/ai',
-    index: '03',
-    label: 'AI',
-    copy: 'Retrieval, reasoning, and agents as product layers — not decoration.',
+    copy: 'Retrieval, reasoning, and agents used as a product layer, applied where they change the outcome.',
+    Exhibit: AIExhibit,
   },
 ]
 
 export default function Home() {
-  const [activeMode, setActiveMode] = useState('design')
-  const reduceMotion = useReducedMotion()
-  const content = modeContent[activeMode]
-  const featured = getFeaturedProjects()
-
-  const textTransition = reduceMotion
-    ? { duration: 0.15 }
-    : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
-
-  function cycleMode(direction) {
-    const index = modes.indexOf(activeMode)
-    const next = (index + direction + modes.length) % modes.length
-    setActiveMode(modes[next])
-  }
-
-  function onModeKeyDown(event) {
-    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
-      event.preventDefault()
-      cycleMode(1)
-    }
-    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-      event.preventDefault()
-      cycleMode(-1)
-    }
-  }
+  const featured = getFeaturedProjects().slice(0, 3)
 
   return (
     <main className="home">
-      <section className={`hero hero--${activeMode}`}>
-        <header className="hero-header">
-          <h1 className="hero-name">{site.name}</h1>
-          <p className="hero-discipline">{site.role}</p>
-        </header>
+      <PageContainer>
+      <section className="intro" aria-label="Introduction">
+        <Reveal>
+          <p className="intro-kicker">Index 2026 — Design × Development × AI</p>
+        </Reveal>
 
-        <div className="hero-center">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={`${activeMode}-label`}
-              className="hero-label"
-              initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
-              transition={textTransition}
-            >
-              {content.label}
-            </motion.p>
-          </AnimatePresence>
+        <h1 className="intro-name">
+          <Reveal>
+            <span>Shreyansh</span>
+          </Reveal>
+          <Reveal delay={0.08}>
+            <span>Patil</span>
+          </Reveal>
+        </h1>
 
-          <AnimatePresence mode="wait">
-            <motion.h2
-              key={activeMode}
-              className="hero-statement"
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -16 }}
-              transition={textTransition}
-            >
-              {content.statement}
-            </motion.h2>
-          </AnimatePresence>
-        </div>
+        <Reveal delay={0.12}>
+          <p className="intro-role">{site.role}</p>
+        </Reveal>
 
-        <HeroStage activeMode={activeMode} />
+        <Reveal delay={0.16}>
+          <p className="intro-statement">
+            I design interfaces, build the systems behind them, and teach those systems to
+            reason — as one practice, not three unrelated jobs.
+          </p>
+        </Reveal>
 
-        <div
-          className="hero-modes"
-          role="radiogroup"
-          aria-label="Portfolio discipline"
-          onKeyDown={onModeKeyDown}
-        >
-          {modes.map((mode) => (
-            <button
-              key={mode}
-              type="button"
-              role="radio"
-              aria-checked={activeMode === mode}
-              className={activeMode === mode ? 'active' : ''}
-              onClick={() => setActiveMode(mode)}
-            >
-              {mode}
-            </button>
-          ))}
-        </div>
-
-        <footer className="hero-footer">
-          <span>{site.discipline}</span>
-          <a href="#selected">Selected work</a>
-        </footer>
+        <Reveal delay={0.2}>
+          <div className="intro-actions">
+            <a href="#practices" className="text-link">
+              Explore the practice ↓
+            </a>
+            <Link to="/contact" className="text-link text-link--accent">
+              Start a conversation
+            </Link>
+          </div>
+        </Reveal>
       </section>
 
-      <PageContainer>
-        <section id="selected" className="home-after">
-          <div className="section-heading">
-            <p className="page-kicker">Selected work</p>
-            <h2>Products across the three practices.</h2>
-          </div>
+      <section id="practices" className="practices" aria-label="Practices">
+        <Reveal>
+          <h2 className="section-title">Three practices, one process.</h2>
+        </Reveal>
 
-          <div className="home-work">
-            {featured.slice(0, 3).map((project) => (
-              <ProjectPreview
-                key={project.slug}
-                project={project}
-                variant="row"
-              />
-            ))}
-          </div>
-
-          <nav className="home-practices" aria-label="Practices">
-            {practices.map((practice) => (
-              <Link key={practice.to} to={practice.to} className="home-practice">
-                <span>{practice.index}</span>
-                <strong>{practice.label}</strong>
-                <p>{practice.copy}</p>
+        <div className="practice-grid">
+          {practices.map((practice, index) => (
+            <Reveal key={practice.name} delay={index * 0.08} className="practice-panel">
+              <div className="practice-panel-head">
+                <span className="practice-panel-no">{practice.no}</span>
+                <h3>{practice.name}</h3>
+              </div>
+              <p>{practice.copy}</p>
+              <practice.Exhibit />
+              <Link to={practice.to} className="text-link">
+                Open {practice.name.toLowerCase()} index →
               </Link>
-            ))}
-          </nav>
-        </section>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="work" aria-label="Selected work">
+        <div className="section-heading-row">
+          <Reveal>
+            <h2>Selected work</h2>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p>A short list, not a wall of thumbnails.</p>
+          </Reveal>
+        </div>
+
+        <ol className="work-list">
+          {featured.map((project, index) => (
+            <Reveal key={project.slug} delay={index * 0.06} as="li" className="work-row">
+              <span className="work-row-no">{String(index + 1).padStart(2, '0')}</span>
+              <Link to={`/${project.category}/projects/${project.slug}`} className="work-row-main">
+                <h3>{project.title}</h3>
+                <p>{project.description}</p>
+              </Link>
+              <span className="work-row-practice">{project.practice}</span>
+              <span className="work-row-arrow" aria-hidden="true">
+                →
+              </span>
+            </Reveal>
+          ))}
+        </ol>
+      </section>
+
+      <section className="about-teaser" aria-label="About">
+        <Reveal>
+          <p>
+            I work across design, development, and AI engineering — usually inside the same
+            product, where the interface, the system, and the intelligence behind it are
+            designed together.
+          </p>
+          <Link to="/about" className="text-link">
+            More about me →
+          </Link>
+        </Reveal>
+      </section>
+
+      <section className="contact-teaser" aria-label="Contact">
+        <Reveal>
+          <h2>Let&rsquo;s build something considered.</h2>
+          <Link to="/contact" className="text-link text-link--accent">
+            Get in touch →
+          </Link>
+        </Reveal>
+      </section>
       </PageContainer>
     </main>
   )

@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Shreyansh Patil">
-  <rect width="32" height="32" fill="#141311"/>
+  <rect width="32" height="32" fill="#0b0b0a"/>
   <text
     x="16"
     y="22"
     text-anchor="middle"
     font-family="Georgia, 'Times New Roman', serif"
     font-size="16"
-    fill="#f3f0e8"
+    fill="#ff5a2b"
   >S</text>
 </svg>

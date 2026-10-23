@@ -1,4 +1,5 @@
 import ProjectPreview from '../components/ProjectPreview.jsx'
+import Reveal from '../components/Reveal.jsx'
 import { getProjectsByCategory } from '../data/projects.js'
 
 export default function ProjectIndex({ category, variant = 'row' }) {
@@ -10,12 +11,10 @@ export default function ProjectIndex({ category, variant = 'row' }) {
 
   return (
     <div className={`project-index project-index--${variant}`}>
-      {projects.map((project) => (
-        <ProjectPreview
-          key={project.slug}
-          project={project}
-          variant={variant}
-        />
+      {projects.map((project, index) => (
+        <Reveal key={project.slug} delay={Math.min(index * 0.05, 0.3)}>
+          <ProjectPreview project={project} variant={variant} index={index} />
+        </Reveal>
       ))}
     </div>
   )

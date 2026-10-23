@@ -1,5 +1,6 @@
 import PageContainer from '../components/PageContainer.jsx'
 import PageHeader from '../components/PageHeader.jsx'
+import Reveal from '../components/Reveal.jsx'
 import { site, socialLinks } from '../data/site.js'
 
 export default function Contact() {
@@ -7,6 +8,7 @@ export default function Contact() {
     <main className="page page-contact">
       <PageContainer>
         <PageHeader
+          index="05"
           kicker="Contact"
           title={
             <>
@@ -21,13 +23,14 @@ export default function Contact() {
         />
 
         <ul className="contact-list">
-          {socialLinks.map((link) => (
-            <li key={link.href}>
+          {socialLinks.map((link, index) => (
+            <Reveal key={link.href} as="li" delay={index * 0.05}>
               <a href={link.href} target="_blank" rel="noreferrer">
+                <span className="contact-list-no">{String(index + 1).padStart(2, '0')}</span>
                 <span className="contact-label">{link.label}</span>
                 <span className="contact-hint">{link.hint}</span>
               </a>
-            </li>
+            </Reveal>
           ))}
         </ul>
 

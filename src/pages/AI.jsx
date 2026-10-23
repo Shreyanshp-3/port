@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import PageContainer from '../components/PageContainer.jsx'
 import PageHeader from '../components/PageHeader.jsx'
-import ProjectPreview from '../components/ProjectPreview.jsx'
+import Reveal from '../components/Reveal.jsx'
+import AIExhibit from '../components/exhibits/AIExhibit.jsx'
+import ProjectIndex from './ProjectIndex.jsx'
 import { getProjectsByCategory } from '../data/projects.js'
 
 const areas = [
@@ -11,11 +13,13 @@ const areas = [
   { label: 'Retrieval-augmented generation', note: 'Answer from a corpus, not from memory.' },
   { label: 'Embeddings & vector search', note: 'Chunk, embed, retrieve — then generate.' },
   { label: 'AI agents', note: 'Retrieve, reason, act. Repeat only when the task needs it.' },
-  { label: 'Application architecture', note: 'Where the model sits in the system, and what it is allowed to touch.' },
+  {
+    label: 'Application architecture',
+    note: 'Where the model sits in the system, and what it is allowed to touch.',
+  },
 ]
 
 export default function AI() {
-  const projects = getProjectsByCategory('ai')
   const also = getProjectsByCategory('development').filter((project) =>
     project.disciplines.includes('AI'),
   )
@@ -24,67 +28,53 @@ export default function AI() {
     <main className="page page-ai">
       <PageContainer>
         <PageHeader
-          kicker="03 — AI"
+          index="03"
+          kicker="Practice"
           title={
             <>
               Intelligence as
-              <br />
-              a product layer.
+              <br />a product layer.
             </>
           }
           lede="I work on retrieval, reasoning, and agents when a product actually needs them. Some of this is application work. Some of it is still an exploration."
         />
 
-        <section className="ai-map" aria-label="AI practice">
-          <div className="ai-process" aria-hidden="true">
-            <span>Retrieve</span>
-            <b>→</b>
-            <span>Reason</span>
-            <b>→</b>
-            <span>Act</span>
-          </div>
-
-          <ol className="capability-list">
-            {areas.map((item, index) => (
-              <li key={item.label}>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                <div>
-                  <strong>{item.label}</strong>
-                  <p>{item.note}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+        <section className="discipline-exhibit" aria-label="AI method">
+          <Reveal>
+            <AIExhibit />
+          </Reveal>
+          <Reveal delay={0.08} className="discipline-notes">
+            <ol className="capability-list">
+              {areas.map((item, index) => (
+                <li key={item.label}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div>
+                    <strong>{item.label}</strong>
+                    <p>{item.note}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
         </section>
 
         <section className="page-section" aria-labelledby="ai-work">
-          <div className="section-heading">
-            <p className="page-kicker">Work</p>
+          <div className="section-heading-row">
             <h2 id="ai-work">Applications and explorations.</h2>
+            <p>Shipped work is marked separately from prototypes.</p>
           </div>
-
-          <div className="project-index project-index--row">
-            {projects.map((project) => (
-              <ProjectPreview
-                key={project.slug}
-                project={project}
-                variant="row"
-              />
-            ))}
-          </div>
+          <ProjectIndex category="ai" variant="row" />
         </section>
 
         {also.length > 0 ? (
           <section className="page-section" aria-labelledby="ai-adjacent">
-            <div className="section-heading">
-              <p className="page-kicker">Also</p>
-              <h2 id="ai-adjacent">Products that already include a model layer.</h2>
+            <div className="section-heading-row">
+              <h2 id="ai-adjacent">Also worth a look.</h2>
             </div>
             <p className="adjacent-note">
-              <Link to="/development/projects/myhealthdiary">{also[0].title}</Link>
-              {' '}
-              lives with the development work, because the product is the point. The model is
-              one of the parts.
+              <Link to="/development/projects/myhealthdiary">{also[0].title}</Link> lives with
+              the development work, because the product is the point. The model is one of the
+              parts.
             </p>
           </section>
         ) : null}
